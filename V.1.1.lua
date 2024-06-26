@@ -71,7 +71,7 @@ local function MakingDeathCube()
 		pcall(function()
 		local playerTouchedCube = game.Players:GetPlayerFromCharacter(hit.Parent)
 		if playerTouchedCube.Character:FindFirstChildOfClass("HumanoidRootPart")
-			and playerTouchedCube.Character:FindFirstChildOfClass("Tool").Parent and playerTouchedCube ~= lplayer then
+			and playerTouchedCube.Character:FindFirstChildOfClass("Tool") and playerTouchedCube ~= lplayer then
 			Hrp:PivotTo(playerTouchedCube.Character.PrimaryPart.CFrame
 				* CFrame.new(nil,nil, -6))
 			print(playerTouchedCube.Name .. " touched cube.")
