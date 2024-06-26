@@ -67,6 +67,7 @@ local function MakingDeathCube()
 	end)
 	
 	DeathCube.Touched:Connect(function(hit)
+		pcall(function()
 		local playerTouchedCube = game.Players:GetPlayerFromCharacter(hit.Parent)
 		if playerTouchedCube.Character:FindFirstChildOfClass("Humanoid")
 			and playerTouchedCube.Character:FindFirstChildOfClass("Tool") and playerTouchedCube ~= lplayer then
@@ -74,7 +75,8 @@ local function MakingDeathCube()
 				* CFrame.new(nil,nil, -6))
 			print(playerTouchedCube.Name .. " touched cube.")
 		end
-	end)
+		end)
+		end)
 end
 
 if PlayersOnServer >= 5 then
