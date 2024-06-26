@@ -8,7 +8,7 @@ local isTarget = false
 local isFight = false
 
 local TargetDistance = 60
-local FightDistance = 15
+local FightDistance = 19
 
 local PlayersOnServer = #game:GetService("Players"):GetPlayers()
 
@@ -57,7 +57,7 @@ end)
 
 local function MakingDeathCube()
 	local DeathCube = Instance.new("Part", character)
-	DeathCube.Size = Vector3.new(15,15,15)
+	DeathCube.Size = Vector3.new(16,16,16)
 	DeathCube.CanCollide = false
 	DeathCube.Anchored = true
 	DeathCube.Transparency = 0.5
@@ -70,7 +70,7 @@ local function MakingDeathCube()
 		pcall(function()
 		local playerTouchedCube = game.Players:GetPlayerFromCharacter(hit.Parent)
 		if playerTouchedCube.Character:FindFirstChildOfClass("HumanoidRootPart")
-			and playerTouchedCube.Character:FindFirstChildOfClass("Tool") and playerTouchedCube ~= lplayer then
+			and playerTouchedCube.Character:FindFirstChildOfClass("Tool").Parent and playerTouchedCube ~= lplayer then
 			Hrp:PivotTo(playerTouchedCube.Character.PrimaryPart.CFrame
 				* CFrame.new(nil,nil, -6))
 			print(playerTouchedCube.Name .. " touched cube.")
