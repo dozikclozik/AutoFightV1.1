@@ -9,6 +9,7 @@ local isFight = false
 
 local TargetDistance = 60
 local FightDistance = 19
+local ExtraDistance = 12
 
 local PlayersOnServer = #game:GetService("Players"):GetPlayers()
 
@@ -54,38 +55,6 @@ textButton.MouseButton1Click:Connect(function()
 	end
 end)
 
-
-local function MakingDeathCube()
-	local DeathCube = Instance.new("Part", character)
-	DeathCube.Size = Vector3.new(16,16,16)
-	DeathCube.CanCollide = false
-	DeathCube.Anchored = true
-	DeathCube.Transparency = 0.5
-	DeathCube.Name = "DeathCube"
-	
-	game["Run Service"].Stepped:Connect(function()
-		DeathCube.CFrame = Hrp.CFrame
-	end)
-end
-
-if PlayersOnServer >= 5 then
-	spawn(MakingDeathCube)
-	task.wait(0.1)
-	spawn(function()
-	character:FindFirstChild("DeathCube").Touched:Connect(function(hit)
-		pcall(function()
-			local playerTouchedCube = game.Players:GetPlayerFromCharacter(hit.Parent)
-			if playerTouchedCube.Character:FindFirstChildOfClass("HumanoidRootPart")
-				and playerTouchedCube.Character:FindFirstChildOfClass("Tool").Parent and playerTouchedCube ~= lplayer then
-				Hrp:PivotTo(playerTouchedCube.Character.PrimaryPart.CFrame
-					* CFrame.new(nil,nil, -6))
-				print(playerTouchedCube.Name .. " touched cube.")
-			end
-		end)
-		end)
-	end)
-end
-	
 local humanoid = character:FindFirstChildOfClass("Humanoid")
 
 local function Move(object)
@@ -124,6 +93,14 @@ game:GetService("RunService").Stepped:Connect(function()
 				local EquippedTool = lplayer.Character:FindFirstChildOfClass("Tool")
 				local magnitude = (Hrp.Position - HrpPlayer.Position).Magnitude
 				local unit = (Hrp.Position - HrpPlayer.Position).unit
+				
+				if magnitude <= ExtraDistance and isTarget and EquippedTool then
+					spawn(function()
+						EquippedTool:Activate()
+						Hrp:PivotTo(PlayerCharacter.PrimaryPart.CFrame * CFrame.new(nil, nil, -6))
+						print("EXTRA ACTIVATED!!!")
+					end)
+				end
 				
 				if magnitude <= TargetDistance and not isTarget and isFight ~= true then
 					isTarget = true
