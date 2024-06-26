@@ -66,6 +66,7 @@ local function MakingDeathCube()
 		DeathCube.CFrame = Hrp.CFrame
 	end)
 	
+	spawn(function()
 	DeathCube.Touched:Connect(function(hit)
 		pcall(function()
 		local playerTouchedCube = game.Players:GetPlayerFromCharacter(hit.Parent)
@@ -76,7 +77,8 @@ local function MakingDeathCube()
 			print(playerTouchedCube.Name .. " touched cube.")
 		end
 		end)
-		end)
+	end)
+	end)
 end
 
 if PlayersOnServer >= 5 then
